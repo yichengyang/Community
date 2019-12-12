@@ -11,7 +11,9 @@ import yicheng.community.mapper.UserMapper;
 import yicheng.community.model.User;
 import yicheng.community.provider.GithubProvider;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -32,7 +34,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                            HttpServletRequest request){
+                           HttpServletRequest request,
+                           HttpServletResponse response){
         System.out.println("testing");
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
@@ -47,15 +50,17 @@ public class AuthorizeController {
         if(githubUser != null)
         {
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(githubUser.getLogin());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
+            response.addCookie(new Cookie("token", token));
             System.out.println("testing3" + githubUser.getLogin());
             //登陆成功，写cookie和session
-            request.getSession().setAttribute("githubUser",githubUser);
+            //request.getSession().setAttribute("githubUser",githubUser);
             return "redirect:/";
         }else{
             //登陆失败，重新登陆
