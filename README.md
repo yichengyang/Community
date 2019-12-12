@@ -1,3 +1,16 @@
 ## 社区项目
 
 ##练习spring boot 用
+
+##脚本 sql
+`
+CREATE TABLE USER
+(
+    ID integer DEFAULT NEXT VALUE FOR "PUBLIC"."SYSTEM_SEQUENCE_B3E729F0_C25B_4AB1_AB11_131277B0B579" AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ACCOUNT_ID varchar(100),
+    NAME varchar(50),
+    TOKEN varchar(36),
+    GMT_CREATE bigint,
+    GMT_MODIFIED bigint
+)
+`
