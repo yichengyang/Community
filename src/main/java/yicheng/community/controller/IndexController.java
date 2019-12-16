@@ -26,18 +26,21 @@ public class IndexController {
                         Model model){
         Cookie[] cookies = request.getCookies();
         if (cookies!=null && cookies.length != 0) {
+            System.out.println("cookie is not null");
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
                     User user = userMapper.findByToken(token);
                     if (user != null) {
                         System.out.println(user.getName());
-                        //request.getSession().setAttribute("user", user);
+                        System.out.println("index write session");
                         request.getSession().setAttribute("user", user);
                     }
                     break;
                 }
             }
+        }else {
+            System.out.println("cookie is null");
         }
 
 

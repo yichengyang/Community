@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充：</label>
-                    <textarea type="text" class="form-control" th:value="${description}"  id="description" name="description"
+                    <textarea type="text" class="form-control" th:text="${description}"  id="description" name="description"
                               placeholder="问题标题......" clos="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
@@ -72,8 +72,13 @@
 
                 <div class="container-flurid main">
                     <div class="row">
-                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" role="alert" th:text="${error}"
-                             th:if="${error != null}"></div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 role="alert"
+                                 th:text="${error}"
+                                 th:if="${error != null}">
+                            </div>
+                        </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <button type="submit" class="btn btn-success btn-publish">
                                 发布
