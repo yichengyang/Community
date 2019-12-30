@@ -36,14 +36,12 @@ public class AuthorizeController {
                            @RequestParam(name = "state") String state,
                            HttpServletRequest request,
                            HttpServletResponse response){
-        System.out.println("testing");
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
         accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
-        System.out.println("testing2");
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
         System.out.println("githubUser:"+githubUser.getLogin());
@@ -61,7 +59,6 @@ public class AuthorizeController {
             response.addCookie(new Cookie("token", token));
             System.out.println("testing3" + githubUser.getLogin());
             //登陆成功，写cookie和session
-            //request.getSession().setAttribute("githubUser",githubUser);
             return "redirect:/";
         }else{
             //登陆失败，重新登陆
